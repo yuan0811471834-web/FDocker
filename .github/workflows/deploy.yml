@@ -33,21 +33,20 @@ jobs:
     runs-on: self-hosted
     needs: build-and-push
     steps:
-      - name: FDocker
+      - name: Deploy to Production
         run: |
-          echo "🚀 Starting Docker Deployment..."
-
-          # Navigate to the folder where docker-compose.yml is located
-          # Adjust this path if your server structure is different
+          echo "🚀 Starting Deployment..."
+          
+          # 1. เข้าไปยังโฟลเดอร์ที่มีไฟล์ docker-compose.yml จริงๆ
           cd $HOME/app/nginx-ui
-
-          # Pull the latest image
+          
+          # 2. ดึง Image ล่าสุด (ไม่ต้องใส่ sudo แล้ว)
           docker compose pull
-
-          # Restart containers
+          
+          # 3. สั่งรัน Container ใหม่
           docker compose up -d --remove-orphans
-
-          # Clean up unused images
+          
+          # 4. ลบ Image เก่าๆ ที่ไม่ได้ใช้เพื่อประหยัดพื้นที่
           docker image prune -f
-
-          echo "🎉 Docker Deployment completed!"
+          
+          echo "🎉 Deployment Successful!"
