@@ -33,20 +33,16 @@ jobs:
     runs-on: self-hosted
     needs: build-and-push
     steps:
-      - name: Deploy to Production
+      - name: Deploy to Nginx UI
         run: |
-          echo "🚀 Starting Deployment..."
+          echo "🚀 Starting Docker Deployment..."
           
-          # 1. เข้าไปยังโฟลเดอร์ที่มีไฟล์ docker-compose.yml จริงๆ
+          # 1. ย้ายเข้าโฟลเดอร์ที่มี docker-compose.yml (อิงจากรูป ls -la ของคุณ)
           cd $HOME/app/nginx-ui
           
-          # 2. ดึง Image ล่าสุด (ไม่ต้องใส่ sudo แล้ว)
+          # 2. รันโดยไม่ต้องใช้ sudo เพราะเราให้สิทธิ์ NOPASSWD ไว้แล้ว
           docker compose pull
-          
-          # 3. สั่งรัน Container ใหม่
           docker compose up -d --remove-orphans
-          
-          # 4. ลบ Image เก่าๆ ที่ไม่ได้ใช้เพื่อประหยัดพื้นที่
           docker image prune -f
           
           echo "🎉 Deployment Successful!"
