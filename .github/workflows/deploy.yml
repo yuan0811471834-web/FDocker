@@ -36,13 +36,13 @@ jobs:
       - name: Deploy to Nginx UI
         run: |
           echo "🚀 Starting Docker Deployment..."
-          
-          # 1. ย้ายเข้าโฟลเดอร์ที่มี docker-compose.yml (อิงจากรูป ls -la ของคุณ)
+
+          # 1. ย้ายเข้าโฟลเดอร์ให้ถูกที่ (แก้จาก ieat-frontend เป็น nginx-ui)
           cd $HOME/app/nginx-ui
-          
-          # 2. รันโดยไม่ต้องใช้ sudo เพราะเราให้สิทธิ์ NOPASSWD ไว้แล้ว
+
+          # 2. รันคำสั่ง Docker (ไม่ต้องใส่ sudo แล้วเพราะคุณเซ็ต NOPASSWD ไว้แล้ว)
           docker compose pull
           docker compose up -d --remove-orphans
           docker image prune -f
-          
-          echo "🎉 Deployment Successful!"
+
+          echo "🎉 Docker Deployment completed!"
