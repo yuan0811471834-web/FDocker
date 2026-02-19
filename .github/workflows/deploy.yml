@@ -33,21 +33,21 @@ jobs:
     runs-on: self-hosted
     needs: build-and-push
     steps:
-      - name: yuan
+      - name: FDocker
         run: |
           echo "🚀 Starting Docker Deployment..."
 
           # Navigate to the folder where docker-compose.yml is located
           # Adjust this path if your server structure is different
-          cd $HOME/app/ieat-frontend
+          cd $HOME/app/nginx-ui
 
           # Pull the latest image
-          sudo docker compose pull
+          docker compose pull
 
           # Restart containers
-          sudo docker compose up -d --remove-orphans
+          docker compose up -d --remove-orphans
 
           # Clean up unused images
-          sudo docker image prune -f
+          docker image prune -f
 
           echo "🎉 Docker Deployment completed!"
